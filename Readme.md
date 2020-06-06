@@ -1,4 +1,4 @@
-~AWS EC2 Steam remote play Self Hosted Cloud Setup Script~
+# AWS EC2 Steam remote play Self Hosted Cloud Setup Script
 
 This script sets up your cloud computer with a bunch of settings and drivers
 to make your life easier.  
