@@ -7,8 +7,8 @@ Unblock-File -Path .\*
 New-Item -ItemType Directory -Path $path\EC2SteamRemotePlayTemp\
 copy-Item .\* -Destination $path\EC2SteamRemotePlayTemp\ -Recurse | Out-Null
 
-start-process powershell.exe -verb RunAS -argument "-file $path\EC2SteamRemotePlayTemp\Scripts\SetWindowsSettings.ps1"
-
+Scripts\SetWindowsSettings.ps1
+Scripts\EnableAutologin.ps1
 
 #Disable Devices
 Start-Process -FilePath "C:\ParsecTemp\Devcon\devcon.exe" -ArgumentList '/r disable "HDAUDIO\FUNC_01&VEN_10DE&DEV_0083&SUBSYS_10DE11A3*"'
@@ -18,8 +18,7 @@ Start-Process -FilePath "C:\ParsecTemp\Devcon\devcon.exe" -ArgumentList '/r disa
 
 
 
-
-	start-process powershell.exe -verb RunAS -argument "-file $ENV:Appdata\ParsecLoader\GPUUpdaterTool.ps1"
+start-process powershell.exe -verb RunAS -argument "-file $ENV:Appdata\ParsecLoader\GPUUpdaterTool.ps1"
 	
 
 Write-Host "Use GPU Updater to update your GPU Drivers!" -ForegroundColor black -BackgroundColor Green 
