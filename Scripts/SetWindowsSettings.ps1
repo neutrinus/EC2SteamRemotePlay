@@ -2,6 +2,23 @@ $path = [Environment]::GetFolderPath("Desktop")
 $currentusersid = Get-LocalUser "$env:USERNAME" | Select-Object SID | ft -HideTableHeaders | Out-String | ForEach-Object { $_.Trim() }
 
 
+# https://www.jonathanmedd.net/2014/02/testing-for-the-presence-of-a-registry-key-and-value.html
+function Test-RegistryValue {
+	param (
+			[parameter(Mandatory=$true)]
+			[ValidateNotNullOrEmpty()]$Path,
+			[parameter(Mandatory=$true)]
+			[ValidateNotNullOrEmpty()]$Value
+	      )
+		try {
+			Get-ItemProperty -Path $Path | Select-Object -ExpandProperty $Value -ErrorAction Stop | Out-Null
+				return $true
+		}
+	catch {
+		return $false
+	}
+}
+
 
 #disable IE security
 Set-Itemproperty "HKLM:\SOFTWARE\Microsoft\Active Setup\Installed Components\{A509B1A7-37EF-4b3f-8CFC-4F3A74704073}" -name IsInstalled -value 0 -force | Out-Null
@@ -40,27 +57,6 @@ set-itemproperty -path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer
 #show file extensions
 Set-itemproperty -path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -name HideFileExt -Value 0 | Out-Null
 
-
-
-function Test-RegistryValue {
-# https://www.jonathanmedd.net/2014/02/testing-for-the-presence-of-a-registry-key-and-value.html
-	param (
-			[parameter(Mandatory=$true)]
-			[ValidateNotNullOrEmpty()]$Path,
-
-			[parameter(Mandatory=$true)]
-			[ValidateNotNullOrEmpty()]$Value
-	      )
-		try {
-			Get-ItemProperty -Path $Path | Select-Object -ExpandProperty $Value -ErrorAction Stop | Out-Null
-				return $true
-		}
-	catch {
-		return $false
-	}
-}
-
-
 #set update policy
 if((Test-RegistryValue -path 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate' -value 'DoNotConnectToWindowsUpdateInternetLocations') -eq $true) {Set-itemproperty -path HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate -Name "DoNotConnectToWindowsUpdateInternetLocations" -Value "1" | Out-Null} else {new-itemproperty -path HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate -Name "DoNotConnectToWindowsUpdateInternetLocations" -Value "1" | Out-Null}
 if((Test-RegistryValue -path 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate' -value 'UpdateServiceURLAlternative') -eq $true) {Set-itemproperty -path HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate -Name "UpdateServiceURLAlternative" -Value "http://intentionally.disabled" | Out-Null} else {new-itemproperty -path HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate -Name "UpdateServiceURLAlternative" -Value "http://intentionally.disabled" | Out-Null}
@@ -80,16 +76,14 @@ if((Test-RegistryValue -Path HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Pol
 
 
 #disable recent start menu items
-New-Item -path HKLM:\SOFTWARE\Policies\Microsoft\Windows -name Explorer
-New-ItemProperty -Path HKLM:\SOFTWARE\Policies\Microsoft\Windows\Explorer -PropertyType DWORD -Name HideRecentlyAddedApps -Value 1
-
-
+New-Item -path HKLM:\SOFTWARE\Policies\Microsoft\Windows -name Explorer  | Out-Null
+New-ItemProperty -Path HKLM:\SOFTWARE\Policies\Microsoft\Windows\Explorer -PropertyType DWORD -Name HideRecentlyAddedApps -Value 1  | Out-Null
 
 #Disables Server Manager opening on Startup
 Get-ScheduledTask -TaskName ServerManager | Disable-ScheduledTask | Out-Null
 
 #AWS Clean up Desktop Items
-Remove-item -path "$path\EC2 Feedback.Website"
+Remove-item -path "$path\EC2 Feedback.Website" 
 Remove-Item -Path "$path\EC2 Microsoft Windows Guide.website"
 
 #cleanup recent files

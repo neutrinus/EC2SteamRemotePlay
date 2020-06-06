@@ -238,10 +238,6 @@ Else {
     Else{}
 }
 }
-
-#remove Windows Proxy
-clear-proxy
-
 #fix gpu
 EnableDisabledGPU
 prepareEnvironment

@@ -1,4 +1,6 @@
 
+
+
 Function TestCredential {
 	param
 		(
@@ -93,5 +95,9 @@ Function GetInstanceCredential {
 			}
 	}
 }
+
+
+Write-Output "Please enter your creditentials so we can enable autologin"
+
 GetInstanceCredential
 
