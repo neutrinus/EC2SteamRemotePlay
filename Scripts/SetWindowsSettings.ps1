@@ -1,3 +1,6 @@
+Write-Output "Setting Windows Settings"
+
+
 $path = [Environment]::GetFolderPath("Desktop")
 $currentusersid = Get-LocalUser "$env:USERNAME" | Select-Object SID | ft -HideTableHeaders | Out-String | ForEach-Object { $_.Trim() }
 
