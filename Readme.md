@@ -20,7 +20,7 @@ Then fill in the details on the next page.
 New-Item -Path $ENV:UserProfile\Downloads\EC2SteamRemotePlay -ItemType Directory  
 Expand-Archive $ENV:UserProfile\Downloads\EC2SteamRemotePlay.Zip -DestinationPath $ENV:UserProfile\Downloads\EC2SteamRemotePlay
 CD $ENV:UserProfile\Downloads\EC2SteamRemotePlay\EC2SteamRemotePlay-master\  
-Powershell.exe -File $ENV:UserProfile\Downloads\EC2SteamRemotePlay\EC2SteamRemotePlay-master\Loader.ps1
+Powershell.exe -File $ENV:UserProfile\Downloads\EC2SteamRemotePlay\EC2SteamRemotePlay-master\run.ps1
 ```
 
 This tool supports:
