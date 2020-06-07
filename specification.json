@@ -1,0 +1,7 @@
+{
+  "ImageId": "ami-0bdfca58d892cacce",
+  "KeyName": "MarekSteam",
+  "SecurityGroupIds": [ "sg-c7779cbf" ],
+  "InstanceType": "g3s.xlarge"
+}
+
