@@ -8,8 +8,15 @@ Based on:
 * https://lg.io/2015/07/05/revised-and-much-faster-run-your-own-highend-cloud-gaming-service-on-ec2.html
 * https://github.com/jamesstringerparsec/Parsec-Cloud-Preparation-Tool
 * https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/install-nvidia-driver.html
+* https://github.com/ecalder6/azure-gaming/blob/master/README.md
 
 Thanks for the fishes!
+
+
+## AWS security groups - network configuration - open ports
+* RDP (for initial configuration and deployment)
+* Steam streaming uses UDP(27031 and 27036) and TCP(27036 and 27037)
+
 
 
 ### Instructions:                    
@@ -28,6 +35,6 @@ CD $ENV:UserProfile\Downloads\EC2SteamRemotePlay\EC2SteamRemotePlay-master\
 Powershell.exe -File $ENV:UserProfile\Downloads\EC2SteamRemotePlay\EC2SteamRemotePlay-master\run.ps1
 ```
 
-6. Run Steam client, login 
+6. Run Steam client, login and install games :)
 
 
